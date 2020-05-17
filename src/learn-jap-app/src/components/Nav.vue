@@ -1,6 +1,10 @@
 <template>
     <b-navbar type="is-primary">
-        
+        <template slot="brand">
+            <b-navbar-item>
+                {{appName}}
+            </b-navbar-item>
+        </template>
     </b-navbar>
 </template>
 
@@ -9,7 +13,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Nav extends Vue {
-  
+  @Prop() private appName!: string;
 }
 </script>
 

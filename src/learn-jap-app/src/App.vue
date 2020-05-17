@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Nav />
+    <Nav appName="Lean Jap Vue" />
+    <Param />
   </div>
 </template>
 
