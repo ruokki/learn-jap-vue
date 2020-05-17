@@ -36,7 +36,7 @@ export default class Param extends Vue {
     }
 
     setChar(): void {
-        this.$store.dispatch('setHira', {
+        this.$store.dispatch('setChar', {
             hira: this.hira,
             kata: this.kata
         });
@@ -45,6 +45,7 @@ export default class Param extends Vue {
     changeDiff(): void {
         this.$store.dispatch('setTile', this.nbTile);
     }
+
 }
 </script>
 

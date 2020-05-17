@@ -169,6 +169,12 @@ export default new Vuex.Store({
         ]
     }
   },
+  getters: {
+    getTiles:(state) => state.tiles,
+    isHira: (state) => state.useHira,
+    isKata: (state) => state.useKata,
+    getCharSet: (state, myCharSet) => state.charSet
+  },
   mutations: {
     USE_HIRA(state): void {
       state.useHira = true;
@@ -187,7 +193,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setHira({ commit }, charToUse: any) {
+    setChar({ commit }, charToUse: any) {
       if(charToUse.hira === true) {
         commit('USE_HIRA');
       }
