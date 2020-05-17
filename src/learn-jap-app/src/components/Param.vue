@@ -1,6 +1,6 @@
 <template>
   <form class="section">
-    <div class="block">
+    <div class="block" @change='setChar()'>
         <h1 class="title">Liste des syllabaires</h1>
         <div class="block center">
             <b-checkbox v-model="hira" size="is-medium">Hiragana</b-checkbox>
@@ -9,7 +9,7 @@
     </div>
     <div class="block">
         <h1 class="title">Difficulté</h1>
-        <div class="block center">
+        <div class="block center" @change='changeDiff()'>
             <b-radio v-model="nbTile" name="dificulty" size="is-medium" :native-value="2">Facile</b-radio>
             <b-radio v-model="nbTile" name="dificulty" size="is-medium" :native-value="4">Nomal</b-radio>
             <b-radio v-model="nbTile" name="dificulty" size="is-medium" :native-value="6">Difficile</b-radio>
@@ -19,17 +19,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Param extends Vue {
-  data() {
-    return {
-      hira: false,
-      kata: false,
-      nbTile: 4
-    };
-  }
+    private hira?: boolean;
+    private kata?: boolean;
+    private nbTile?: number;
+
+    data() {
+        return {
+            hira: false,
+            kata: false,
+            nbTile: 4
+        };
+    }
+
+    setChar(): void {
+        this.$store.dispatch('setHira', {
+            hira: this.hira,
+            kata: this.kata
+        });
+    }
+
+    changeDiff(): void {
+        this.$store.dispatch('setTile', this.nbTile);
+    }
 }
 </script>
 

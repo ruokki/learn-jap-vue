@@ -5,6 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    useHira: false,
+    useKata: false,
+    tiles: 0,
     charSet: {
         hira: [
             /* Syllabes avec le a */
@@ -167,8 +170,46 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    USE_HIRA(state): void {
+      state.useHira = true;
+    },
+    REMOVE_HIRA(state): void {
+      state.useHira = false;
+    },
+    USE_KATA(state): void {
+      state.useKata = true;
+    },
+    REMOVE_KATA(state): void {
+      state.useKata = false;
+    },
+    SET_TILE(state, payload): void {
+      state.tiles = payload;
+    }
   },
   actions: {
+    setHira({ commit }, charToUse: any) {
+      if(charToUse.hira === true) {
+        commit('USE_HIRA');
+      }
+      else {
+        commit('REMOVE_HIRA');
+      }
+
+      if(charToUse.kata === true) {
+        commit('USE_KATA');
+      }
+      else {
+        commit('REMOVE_KATA');
+      }
+    },
+    setTile({commit}, nbTile: number) {
+      if(nbTile > 0) {
+        commit('SET_TILE', nbTile);
+      }
+      else {
+        commit('SET_TILE', 4);
+      }
+    }
   },
   modules: {
   }

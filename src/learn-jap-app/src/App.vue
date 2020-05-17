@@ -2,6 +2,7 @@
   <div id="app">
     <Nav appName="Lean Jap Vue" />
     <Param />
+    <Game />
   </div>
 </template>
 
@@ -9,11 +10,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Nav from './components/Nav.vue';
 import Param from './components/Param.vue';
+import Game from './components/Game.vue';
 
 @Component({
   components: {
     Nav,
-    Param
+    Param,
+    Game
   },
 })
 export default class App extends Vue {}
