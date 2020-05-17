@@ -8,10 +8,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Nav from './components/Nav.vue';
+import Param from './components/Param.vue';
 
 @Component({
   components: {
     Nav,
+    Param
   },
 })
 export default class App extends Vue {}
