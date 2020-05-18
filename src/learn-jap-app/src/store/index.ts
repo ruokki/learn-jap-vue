@@ -173,7 +173,7 @@ export default new Vuex.Store({
     getTiles:(state) => state.tiles,
     isHira: (state) => state.useHira,
     isKata: (state) => state.useKata,
-    getCharSet: (state, myCharSet) => state.charSet
+    getCharSet: (state) => state.charSet
   },
   mutations: {
     USE_HIRA(state): void {

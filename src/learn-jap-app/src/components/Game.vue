@@ -1,14 +1,25 @@
 <template>
-    <div>
-        <p>À quoi correspond le caractère {{ waitedChar.char }} ?</p>
-        <div class="columns">
-            
+    <div v-if="allReady">
+        <h1 class="title">À quoi correspond le caractère {{ waitedChar.char }} ?</h1>
+        <div class="columns is-multiline is-vcentered">
+            <div v-for="char in listeChar" :key="char.char" class="column is-half">
+                <b-button 
+                    @click="verifyAnswer(char.rep)" 
+                    class="is-large" 
+                    outlined 
+                    expanded
+                    type="is-primary"
+                    v-bind="disableMe"
+                    >
+                        {{ char.rep }}
+                </b-button>
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import { mapGetters } from 'vuex';
 
 @Component({
@@ -21,14 +32,47 @@ export default class Game extends Vue {
     isHira: any;
     isKata: any;
     getCharSet: any;
-    waitedChar: any;
+    waitedChar: any = null;
     listeChar: any[] = [];
+    btnDis?: boolean;
 
     data() {
         return {
             waitedChar: null,
-            listeChar: []
+            listeChar: [],
+            buttonType: false,
+            btnDis: false
         }
+    }
+
+    @Watch('getTiles')
+    onChangeTiles() {
+        this.watcherCallback();
+    }
+
+    @Watch('isHira')
+    onChangeHira() {
+        this.watcherCallback();
+    }
+
+    @Watch('isKata')
+    onChangeKata() {
+        this.watcherCallback();
+    }
+
+    watcherCallback(): void {
+        this.setGame();
+    }
+
+    get allReady() {
+        if(
+            this.waitedChar === null ||
+            this.listeChar.length === 0
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     setGame(): void {
@@ -65,12 +109,34 @@ export default class Game extends Vue {
         this.waitedChar = this.listeChar[randomNb];
     }
 
-    mounted() {
-        this.setGame();
+    verifyAnswer(rep: string) {
+        if(rep === this.waitedChar.rep) {
+            this.$buefy.toast.open({
+                message: "Bonne réponse !",
+                type: "is-success",
+                queue: false,
+                position: "is-bottom"
+            });
+            this.btnDis = true;
+            setTimeout(() => {
+                this.btnDis = false;
+                this.setGame();
+            }, 2000);
+        }
+        else {
+            this.$buefy.toast.open({
+                message: "Mauvaise réponse !",
+                type: "is-danger",
+                queue: false,
+                position: "is-bottom"
+            });
+        }
     }
 
-    beforeUpdate() {
-        this.setGame();
+    get disableMe() {
+        return {
+            disabled: this.btnDis
+        };
     }
 
 }
