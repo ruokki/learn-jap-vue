@@ -1,15 +1,14 @@
 <template>
     <div v-if="allReady">
         <h1 class="title">À quoi correspond le caractère {{ waitedChar.char }} ?</h1>
-        <div class="columns is-multiline is-vcentered">
+        <div class="columns is-multiline is-vcentered is-mobile">
             <div v-for="char in listeChar" :key="char.char" class="column is-half">
                 <b-button 
-                    @click="verifyAnswer(char.rep)" 
-                    class="is-large" 
-                    outlined 
-                    expanded
+                    @click="verifyAnswer(char.rep, $event)" 
+                    class="is-large"
                     type="is-primary"
-                    v-bind="disableMe"
+                    outlined
+                    expanded
                     >
                         {{ char.rep }}
                 </b-button>
@@ -109,7 +108,11 @@ export default class Game extends Vue {
         this.waitedChar = this.listeChar[randomNb];
     }
 
-    verifyAnswer(rep: string) {
+    verifyAnswer(rep: string, $event: any) {
+        if(this.btnDis) {
+            return;
+        }
+
         if(rep === this.waitedChar.rep) {
             this.$buefy.toast.open({
                 message: "Bonne réponse !",
@@ -117,7 +120,11 @@ export default class Game extends Vue {
                 queue: false,
                 position: "is-bottom"
             });
+            
+            $event.target.classList.remove('is-primary', 'is-outlined');
+            $event.target.classList.add('is-success');
             this.btnDis = true;
+
             setTimeout(() => {
                 this.btnDis = false;
                 this.setGame();
@@ -133,16 +140,12 @@ export default class Game extends Vue {
         }
     }
 
-    get disableMe() {
-        return {
-            disabled: this.btnDis
-        };
-    }
-
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+.columns {
+    padding: 0 8px;
+}
 </style>
