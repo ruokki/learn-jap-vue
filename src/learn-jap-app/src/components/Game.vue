@@ -103,6 +103,8 @@ export default class Game extends Vue {
             }
         }
 
+        this.shuffleArray(this.listeChar);
+
         // on prend une réponse au hasard
         randomNb = Math.floor(Math.random() * Math.floor(this.listeChar.length));
         this.waitedChar = this.listeChar[randomNb];
@@ -138,6 +140,23 @@ export default class Game extends Vue {
                 position: "is-bottom"
             });
         }
+    }
+
+    shuffleArray(myArray: any[]): any[] {
+        let m = myArray.length, t, i;
+
+        // While there remain elements to shuffle
+        while (m) {
+            // Pick a remaining element…
+            i = Math.floor(Math.random() * m--);
+
+            // And swap it with the current element.
+            t = myArray[m];
+            myArray[m] = myArray[i];
+            myArray[i] = t;
+        }
+
+        return myArray;
     }
 
 }
