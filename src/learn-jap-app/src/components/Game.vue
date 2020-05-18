@@ -120,7 +120,7 @@ export default class Game extends Vue {
                 message: "Bonne réponse !",
                 type: "is-success",
                 queue: false,
-                position: "is-bottom"
+                position: "is-top"
             });
             
             $event.target.classList.remove('is-primary', 'is-outlined');
@@ -137,7 +137,7 @@ export default class Game extends Vue {
                 message: "Mauvaise réponse !",
                 type: "is-danger",
                 queue: false,
-                position: "is-bottom"
+                position: "is-top"
             });
         }
     }
